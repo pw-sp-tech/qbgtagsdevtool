@@ -6,7 +6,7 @@
     <base target="_top">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>(DEV)QBG Tags Excel Maker</title>
+    <title>QBG Tags Excel Maker</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://kit.fontawesome.com/2e507ab521.js" crossorigin="anonymous"></script>
     <style>
@@ -842,7 +842,8 @@
             <span class="row-number">SN: 1</span>
             <div class="selects">
                 <div class="select-container hidden default">
-                    <label class="select-label">name</label>
+                    <label class="select-label"><span class="select-label-name"></span><span
+                            class="select-label-count"></span></label>
                     <select name="" class="name" onchange="tagSelected(this)" disabled>
                         <option value="" selected hidden>--select--</option>
                     </select>
@@ -935,7 +936,7 @@
     const adminLoginWindowEl = document.querySelector(".admin-login-window");
     //env & base urls
     const env = [`dev`, `stage`, `production`][1];
-    const backEnv = [`dev`, `stage`, `production`, 'local'][3];
+    const backEnv = [`dev`, `stage`, `production`, 'local'][2];
     const devFeaturesOn = true;
     const utilitiesAPIBaseURL = backEnv == 'local' ? `http://localhost:8080` : `https://www.api-pw-internal-utilities.in`;
     const qbgBaseURL = `https://qbg-${env == `production` ? `api` : `backend-${env}`}.penpencil.co`;
@@ -1162,8 +1163,7 @@
             }
             const newSelectBox = defaultSelectBox.cloneNode(true);
             defaultSelectsContainer.insertBefore(newSelectBox, defaultSelectBox);
-            newSelectBox.querySelector('.select-label').innerHTML = `${obj.name.toUpperCase
-                ()}<i class="fa-solid ${devFeaturesOn ? "" : "hidden"} fa-copy" style="color:white;margin-left:2px;font-size:15px;" onclick="copyId(this)"></i>`;
+            newSelectBox.querySelector('.select-label').querySelector(`.select-label-name`).innerHTML = `${obj.name.toUpperCase()}`;
             newSelectBox.querySelector('select').setAttribute('tag-name', obj.name);
             newSelectBox.classList.remove('hidden');
             newSelectBox.classList.replace('default', 'visible');
@@ -1343,7 +1343,7 @@
             });
             select.removeAttribute('disabled')
             select.innerHTML = html;
-            select.parentElement.querySelector(".select-label").innerHTML = `${select.parentElement.querySelector(".select-label").innerHTML.split("(")[0]}(${count})`;
+            select.parentElement.querySelector(".select-label").querySelector('.select-label-count').innerHTML = `(${count})`;
             console.log(parents ? parents[parents.length - 1].selectedOptions[0].innerHTML : "", count)
         })
     }
